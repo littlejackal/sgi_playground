@@ -1,0 +1,40 @@
+
+Menu "SOFTIMAGE Products"
+{
+	"Soft3D_3.9.2"	f.menu "Soft3D_3.9.2"
+}
+
+Menu "Soft3D_3.9.2"
+{
+	"Dialog Editor"	f.checkexec "/usr/Softimage/Soft3D_4.0/.si_wrapper.sh /usr/Softimage/Soft3D_4.0/3D/bin/dial /usr/Softimage/Soft3D_4.0/3D/rsrc"
+}
+
+Menu "Soft3D_3.9.2"
+{
+	"SI|3D Base"	f.checkexec "/usr/Softimage/Soft3D_4.0/.si_wrapper.sh /usr/Softimage/Soft3D_4.0/3D/bin/soft -B /usr/Softimage/Soft3D_4.0/3D/rsrc"
+}
+
+Menu "Soft3D_3.9.2"
+{
+	"SI|3D Extreme"	f.checkexec "/usr/Softimage/Soft3D_4.0/.si_wrapper.sh /usr/Softimage/Soft3D_4.0/3D/bin/soft /usr/Softimage/Soft3D_4.0/3D/rsrc"
+}
+
+Menu "Soft3D_3.9.2"
+{
+	"SI|3D GT"	f.checkexec "/usr/Softimage/Soft3D_4.0/.si_wrapper.sh /usr/Softimage/Soft3D_4.0/3D/bin/soft -G /usr/Softimage/Soft3D_4.0/3D/rsrc"
+}
+
+Menu "Soft3D_3.9.2"
+{
+	"SI|3D Setup"	f.checkexec "/usr/Softimage/Soft3D_4.0/.si_wrapper.sh /usr/Softimage/Soft3D_4.0/setup"
+}
+
+Menu "Soft3D_3.9.2"
+{
+	"SI|3D Setup Help"	f.checkexec "/usr/bin/X11/netscape /usr/Softimage/Soft3D_4.0/Setup/Help/start.htm"
+}
+
+Menu "Soft3D_3.9.2"
+{
+	"User Tools"	f.checkexec "/usr/Softimage/Soft3D_4.0/Setup/UserTools"
+}
