@@ -1,7 +1,7 @@
 # IRIX Dotfiles
 
-### icons/login.icon
+### icons/login.icon -> ~/.icons/login.icon
 - what a friendly fella
-- ~/.icons/login.icon
 
-
+### auxchestrc -> ~/.auxchestrc
+- remove some default trash

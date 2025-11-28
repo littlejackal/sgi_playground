@@ -1,0 +1,18 @@
+Menu ToolChest
+{
+	no-label	f.separator
+	"Software"	f.menu Software
+	no-label	f.separator
+	"SGUG"	f.menu SGUG
+}
+
+Menu SGUG
+{
+	"xsginet"	f.checkexec.sh.le	"/usr/sgug/bin/xsginet"
+}
+
+remove "Welcome to SGI" from Help
+remove "Browse OutBox Page" from Internet
+remove "Icon View of a Web Site" from Internet
+
+sinclude /usr/Softimage/.title
