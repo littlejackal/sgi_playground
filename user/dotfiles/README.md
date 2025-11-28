@@ -8,3 +8,6 @@
 
 ### Xresources -> ~/.Xresources
 - Various look and feel items
+
+### profile -> ~/.profile
+- Various bash-isms
