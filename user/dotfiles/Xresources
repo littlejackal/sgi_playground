@@ -1,0 +1,20 @@
+/*
+ *    Borderless windows
+ */
+*Toolchest*clientDecoration: none
+*Toolchest*clientFunctions:  -resize -minimize -maximize
+
+Xft.dpi: 96
+
+/* Amber winterm */
+winterm*background:		#121212
+winterm*foreground:		#ffb000
+winterm.boldColor:		#ffcc00
+winterm.cursorTextColor:	#121212
+winterm.cursorPageColor:	#ffcc00
+winterm.selectionTextColor:	#121212
+winterm.selectionPageColor:	#ffb000
+
+/* Greenscreen console */
+startconsole*background:	#121212
+startconsole*foreground:	#33ff00

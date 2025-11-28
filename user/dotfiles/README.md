@@ -5,3 +5,6 @@
 
 ### auxchestrc -> ~/.auxchestrc
 - remove some default trash
+
+### Xresources -> ~/.Xresources
+- Various look and feel items
