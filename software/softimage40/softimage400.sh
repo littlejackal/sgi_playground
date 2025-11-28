@@ -38,7 +38,7 @@ export SI_PAINT_FX="$SI_LOCATION/3D/pfx"
 export SI_UDX_PATH="$SI_LOCATION/3D/custom/udx"
 export EFFECTS_EDITOR='jot -f'
 
-export LD_LIBRARYN32_PATH="$SI_LOCATION/3D/dso:$SI_LOCATION/3D/custom/bin:$SI_LOCATION/3D/custom/dso:$SI_LOCATION/Particle/dso:$SI_LOCATION/3D/dso/softGraphic${glext}:$LD_LIBRARY_PATH"
+export LD_LIBRARYN32_PATH="$SI_LOCATION/3D/dso:$SI_LOCATION/3D/custom/bin:$SI_LOCATION/3D/custom/dso:$SI_LOCATION/Particle/dso:$SI_LOCATION/3D/dso/softGraphic${glext}:$LD_LIBRARYN32_PATH"
 
 export SI_MI_PREVIEW="$SI_LOCATION/mental_ray/bin/mi_preview.so"
 export SI_MI_SHADER_TOKEN="yes"
