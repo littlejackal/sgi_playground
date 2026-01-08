@@ -1,0 +1,3 @@
+/* Greenscreen console */
+startconsole*background:	#121212
+startconsole*foreground:	#33ff00

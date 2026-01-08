@@ -1,0 +1,10 @@
+/*
+ *    Borderless windows
+ */
+*Toolchest*clientDecoration: none
+*Toolchest*clientFunctions:  -resize -minimize -maximize
+
+
+/*
+ *    ~/Xresources.d/* files will also be loaded by modified Xsession file
+ */

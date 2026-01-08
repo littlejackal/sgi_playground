@@ -1,0 +1,80 @@
+#!/bin/sh
+
+# Based on: $XConsortium: Xsession,v 1.7 92/08/06 11:08:14 gildea Exp $
+
+# # Uncomment this for X11R5 redirection of Xsession errors.
+#
+# # redirect errors to a file in user's home directory if we can
+# for errfile in "$HOME/.xsession-errors" "/tmp/xses-$USER"
+# do
+#         if ( cp /dev/null "$errfile" 2> /dev/null )
+#         then
+#                 chmod 600 "$errfile"
+#                 exec > "$errfile" 2>&1
+#                 break
+#         fi
+# done
+
+case $# in
+1)
+	case $1 in
+	failsafe)
+		exec xterm -geometry 80x24+50+50
+		;;
+	esac
+esac
+
+xsession=$HOME/.xsession
+resources=$HOME/.Xresources
+resources_dir=$HOME/.Xresources.d
+sgisession=$HOME/.sgisession
+userenv=/usr/bin/X11/userenv
+
+if [ -r $xsession -a "$0" != $xsession ]; then
+	if [ -x $xsession ]; then
+		exec $xsession
+	elif [ -r $xsession ]; then
+		exec /bin/sh $xsession
+	fi
+fi
+
+if [ -r $resources ]; then
+	xrdb -load -quiet $resources
+fi
+
+# Load additional resource files from resources directory
+if [ -d $resources_dir ]; then
+	for resource_file in $resources_dir/*; do
+		if [ -f "$resource_file" ]; then
+			xrdb -load -quiet "$resource_file"
+		fi
+	done
+fi
+
+XUSERFILESEARCHPATH="$HOME/$dotdesktop/%N:$HOME/%N:$HOME/%L/%N%C:$HOME/%l/%N%C:$HOME/%N%C:$HOME/%L/%N:$HOME/%l/%N"
+export XUSERFILESEARCHPATH
+
+if [ -x $userenv ]; then
+	#
+	# Find user's environment as set up during a login
+	#  shell, and add that to current environment.
+	#
+	eval `$userenv`
+fi
+
+/usr/bin/X11/4Dwm &
+/usr/bin/X11/wait4wm
+
+# Gives anyone on any host access to this display
+# /usr/bin/X11/xhost +
+
+if [ -x $sgisession ]; then
+	$sgisession &
+elif [ -r $sgisession ]; then
+	/bin/sh $sgisession &
+fi
+
+/usr/bin/X11/toolchest -name ToolChest &
+
+/usr/bin/X11/xterm -geom 80x24+17-17 &
+exec /usr/bin/X11/reaper
