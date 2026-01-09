@@ -83,7 +83,8 @@ mkdir /boot/stand
 
 ```shell
 mkfs_xfs /dev/rdsk/dks2d0s0
-mkdir /nvme && mount /dev/dsk/dks2d0s0 /nvme
+mkdir /nvme 
+mount /dev/dsk/dks2d0s0 /nvme
 ```
 
 - Use xfsdump to clone the running system to /nvme
@@ -128,6 +129,14 @@ setenv -p OSLoadPartition xio(0)pci(15)scsi(0)disk(2)rdisk(0)partition(0)
 - A cold boot should now successfully load /unix from the ZuluSCSI, then use dks2d0s0 as /dev/root. If all went well, you are now booted from nVME
 
 ### Post-boot tweaking
+
+#### /nvme is now surplus
+
+We only needed this while staging from rust to silicon. Yeet it outta there!
+
+```shell
+rmdir /nvme
+```
 
 #### Autoconfig
 
