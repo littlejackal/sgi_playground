@@ -1,0 +1,18 @@
+43c43
+< TARGET=${UNIX:=/boot/unix}
+---
+> TARGET=${UNIX:=/unix}
+111c111
+< 	rm -rf ${TARGET}.install
+---
+> 	rm -rf ${UNIX}.install
+130,131c130,131
+< 	if test -w ${TARGET}.install; then
+< 		chmod a+r ${TARGET}.install
+---
+> 	if test -w ${UNIX}.install; then
+> 		chmod a+r ${UNIX}.install
+133c133
+< 			$SETSYM ${TARGET}.install > /dev/null 2>&1
+---
+> 			$SETSYM ${UNIX}.install > /dev/null 2>&1

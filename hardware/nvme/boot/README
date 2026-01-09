@@ -1,0 +1,3 @@
+This partition is used to store system files needed for an IP30/IP32 PROM to boot with a root partition on nVME
+
+This partition is not a place of honor... no userland files are stored here... nothing valued is here.

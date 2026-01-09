@@ -1,0 +1,6 @@
+43,44c43,44
+< if test -x /boot/unix.install; then
+<     mv /boot/unix.install /boot/unix
+---
+> if test -x /unix.install; then
+>     mv /unix.install /unix
