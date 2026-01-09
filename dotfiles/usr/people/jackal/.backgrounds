@@ -1,0 +1,18 @@
+background "Pxl: Rain Train"
+   default "-image /usr/people/jackal/.backgrounds-files/pix-jp-01-l.png"
+
+background "Pxl: Rain Train (Dark)"
+   default "-image /usr/people/jackal/.backgrounds-files/pix-jp-01-d.png"
+
+background "Pxl: Oh Deer!"
+   default "-image /usr/people/jackal/.backgrounds-files/pix-jp-02.png"
+
+background "Pxl: Snow Train"
+   default "-image /usr/people/jackal/.backgrounds-files/pix-jp-03.png"
+
+background "Pxl: Don't be koi!"
+   default "-image /usr/people/jackal/.backgrounds-files/pix-jp-04.png"
+
+background "Solid"
+   command "-solid %1"
+   default "-solid sgiLightBlue"

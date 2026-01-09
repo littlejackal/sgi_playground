@@ -1,0 +1,15 @@
+! Xresources Config Directory
+!
+! Will require modified Xsession and Xsession-remote in /var/X11/xdm
+!
+! Add where appropriate:
+!
+! resources_dir=$HOME/.Xresources.d
+! # Load additional resource files from resources directory
+! if [ -d $resources_dir ]; then
+!	 for resource_file in $resources_dir/*; do
+!	 	if [ -f "$resource_file" ]; then
+! 			xrdb -load -quiet "$resource_file"
+! 		fi
+!	 done
+! fi

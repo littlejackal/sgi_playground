@@ -1,0 +1,66 @@
+#
+# /etc/cshrc - Default settings for all csh users
+#
+# jkl - custom csh/tcsh settings
+#
+# This is 'sourced' before $HOME/.cshrc, which in turn preceeds $HOME/.login
+# when a csh user logs in or invokes /bin/su with the `-' option.
+
+# Tell the shell where to look for mail.
+if ($?MAIL == 0) setenv MAIL /usr/mail/$USER
+set mail=$MAIL
+
+if (! $?ENVONLY) then
+
+	# Print the message of the day.
+	cat -s /etc/motd
+
+	# Check for mail.
+	if ( -e /bin/mail ) then
+	    if ( { /bin/mail -e } ) then
+		echo 'You have mail.'
+	    endif
+	endif
+endif
+
+setenv MSGVERB text:action
+setenv NOMSGLABEL 1
+setenv NOMSGSEVERITY 1
+
+# stty Sanity
+stty intr '^C' 
+stty susp '^Z'
+stty echoe
+
+# SGUG binaries at front of path which may override system binaries
+set path = ( /usr/sgug/bin /usr/sgug/sbin /usr/local/bin $path )
+
+# SGUG Libraries at end of path to prevent unwanted conflicts
+setenv LD_LIBRARYN32_PATH /usr/lib32:/lib32:/usr/lib:/lib:/usr/sgug/lib32:/usr/local/lib
+
+setenv MANPATH /usr/sgug/share/man:/usr/share/catman:/usr/share/man:/usr/catman:/usr/man:/usr/local/share/man:$HOME/man
+setenv LC_ALL C
+
+setenv PAGER less
+setenv MANPAGER less
+
+if ( $?prompt ) then
+
+  set filec
+  set history = 1000
+  set savehist = (1000 merge)
+  set autolist = ambiguous
+  set autoexpand
+  set autorehash
+  set addsuffix
+  set cdtohome
+  set correct = all
+  set listjobs
+  set padhour
+  set rmstar
+  
+  if ( $?tcsh ) then
+    set prompt="%B[%b%m%B:%b%c3%B]%b %n %B%#%b "
+  endif
+
+endif

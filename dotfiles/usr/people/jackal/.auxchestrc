@@ -3,12 +3,19 @@ Menu ToolChest
 	no-label	f.separator
 	"Software"	f.menu Software
 	no-label	f.separator
-	"SGUG"	f.menu SGUG
+	"Utils"	f.menu SGUG
+	no-label	f.separator
+	"Music" f.menu Music
 }
 
-Menu SGUG
+Menu Utils
 {
 	"xsginet"	f.checkexec.sh.le	"/usr/sgug/bin/xsginet"
+}
+
+Menu Music
+{
+	"SchismTracker" f.checkexec.sh.le "/usr/local/bin/schismtracker --no-hooks"
 }
 
 remove "Welcome to SGI" from Help
