@@ -67,7 +67,7 @@ mount /dev/rdsk/dks0d2s0 /boot
 ```shell
 cp /unix /boot/unix
 mkdir /boot/stand
-# Pull /bootdev/stand/* from the running system's volume headers
+# Pull /boot/stand/* from the running system's volume headers
 /etc/dvhtool -v get ide /boot/stand/ide /dev/rdsk/dks0d1vh
 /etc/dvhtool -v get sash /boot/stand/sash /dev/rdsk/dks0d1vh
 /etc/dvhtool -v get fx /boot/stand/fx /dev/rdsk/dks0d1vh
