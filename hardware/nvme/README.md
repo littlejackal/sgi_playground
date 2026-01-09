@@ -58,7 +58,8 @@ fx -x -d /dev/rdsk/dks0d2vol
 
 ```shell
 mkfs_xfs /dev/rdsk/dks0d2s0
-mkdir /boot && mount /dev/rdsk/dks0d2s0 /boot
+mkdir /boot
+mount /dev/rdsk/dks0d2s0 /boot
 ```
 
 - Populate the partition's headers, and preload /unix and /stand
@@ -153,3 +154,17 @@ ln -s /boot/unix /unix
 
 - TODO: Modify rc0 to create a backup of /boot/unix before it does a replacement
 - TODO: Validate what else needs updating to /boot because it can't handle a /unix symlink. savecore maybe??
+
+#### Additional usage
+
+Since you're now likely using a multi-gigabyte card to store a handful of 11MB files, the absolute waste of it all is probably washing over you.
+
+Consider what else you can do with all your newfound space.
+
+Given that your nVME is likely way faster than the ZuluSCSI, I would probably not recommend anything user interactive. Depending on the size of your nVME and how much data you are carrying at any given time, I think that the extra SD card space could be a perfect target to keep a backup of your system root drive.
+
+I created a /boot/rootclone directory and will be running an xfsbackup of my nVME root drive into it, likely via cron.
+
+Now obviously if you have a 1TB nVME drive and a 32GB or 64GB SD card this is going to eventually capacity out, so excluding any large data could be a good strategy.
+
+I'll update this repo as I come up with something resembling a usable implementation of this. 
