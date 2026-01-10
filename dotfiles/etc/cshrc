@@ -54,7 +54,7 @@ if ( $?prompt ) then
   set autorehash
   set addsuffix
   set cdtohome
-  set correct = all
+  set correct = command
   set listjobs
   set padhour
   set rmstar
