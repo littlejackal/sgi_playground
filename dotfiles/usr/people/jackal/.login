@@ -28,5 +28,9 @@ if ($?DISPLAY == 0) then
 endif
 
 # git-isms
-eval `ssh-agent` > /dev/null
+setenv SSH_AUTH_SOCK ~/.ssh/ssh-agent.`hostname`.sock
+ssh-add -l >& /dev/null
+if ( $status >= 2 ) then
+  rm -f "$SSH_AUTH_SOCK" && ssh-agent -a "$SSH_AUTH_SOCK" >& /dev/null
+endif
 ssh-add ~/.ssh/id_jackal_coyote >& /dev/null
