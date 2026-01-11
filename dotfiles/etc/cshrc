@@ -64,3 +64,10 @@ if ( $?prompt ) then
   endif
 
 endif
+
+# de/re SCUG
+alias rmpath 'source /usr/local/bin/rmpath.csh'
+alias rmlibpath 'source /usr/local/bin/rmlibpath.csh'
+
+alias descug 'rmpath /usr/sgug/bin && rmpath /usr/sgug/sbin && rmlibpath /usr/sgug/lib32'
+alias rescug 'set path = ( /usr/sgug/bin /usr/sgug/sbin $path ) && setenv LD_LIBRARYN32_PATH ${LD_LIBRARYN32_PATH}:"/usr/sgug/lib"'
