@@ -54,7 +54,7 @@ fx -x -d /dev/rdsk/dks0d2vol
 - ro (rootdrive)
 ```
 
-- Format and mount the partition as /bootdev
+- Format and mount the partition as /boot
 
 ```shell
 mkfs_xfs /dev/rdsk/dks0d2s0
