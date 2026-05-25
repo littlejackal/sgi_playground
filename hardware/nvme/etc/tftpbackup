@@ -1,0 +1,112 @@
+#!/bin/sh
+#
+# IRIX init script to backup /unix.install to TFTP server during shutdown/reboot
+# Place this in /etc/init.d/ and link from /etc/rc0.d/K05tftpbackup
+#
+# This script runs early during shutdown (runlevel 0) to ensure network is still up
+
+# Configuration
+TFTP_SERVER="10.0.1.100"  # Change this to your TFTP server IP
+INSTALL_KERNEL="/unix.install"
+LOGFILE="/var/adm/tftpbackup.log"
+
+# Get the SGI host ID for filename using ethernet address
+get_hostid() {
+    /usr/etc/nvram eaddr 2>/dev/null | tr -d ':'
+}
+
+# Check if network is still up by pinging TFTP server
+check_network() {
+    # Try pinging the TFTP server with 2 packets, 1 second timeout
+    /usr/etc/ping -c 2 -w 1 "$TFTP_SERVER" > /dev/null 2>&1
+    return $?
+}
+
+# Create temporary expect script for TFTP transfer
+create_expect_script() {
+    local temp_script="/tmp/tftpbackup_$$.exp"
+    cat > "$temp_script" << 'EOF'
+#!/usr/bin/expect -f
+set tftp_server [lindex $argv 0]
+set local_file [lindex $argv 1]
+set remote_filename [lindex $argv 2]
+set timeout 30
+spawn /usr/bsd/tftp $tftp_server
+expect {
+"tftp>" {
+send "binary\r"
+expect "tftp>"
+send "put $local_file $remote_filename\r"
+expect {
+"tftp>" {send "quit\r"; expect eof; exit 0}
+timeout {send "quit\r"; expect eof; exit 1}
+eof {exit 1}}}
+timeout {exit 1}
+eof {exit 1}}
+exit 1
+EOF
+    chmod 755 "$temp_script"
+# Log function
+log_message() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') tftpbackup: $1" >> "$LOGFILE"
+}
+
+case "$1" in
+'stop')
+    log_message "Starting TFTP backup check..."
+    
+    # Check if /unix.install exists
+    if [ ! -f "$INSTALL_KERNEL" ]; then
+        log_message "/unix.install not found, skipping backup"
+        exit 0
+    fi
+    
+    # Check if network is still available and TFTP server is reachable
+    if ! check_network; then
+        log_message "TFTP server $TFTP_SERVER not reachable, skipping backup"
+        exit 0
+    fi
+    
+    # Check if expect script exists
+    if ! which expect >/dev/null 2>&1; then
+        log_message "Expect command not found, skipping backup"
+        exit 0
+    fi
+    
+    # Get host ID for filename
+    HOSTID=$(get_hostid)
+    if [ -z "$HOSTID" ]; then
+        log_message "Could not determine host ID, skipping backup"
+        exit 0
+    fi
+    
+    log_message "Backing up $INSTALL_KERNEL to $TFTP_SERVER as unix.$HOSTID"
+    
+    # Create temporary expect script
+    TEMP_EXPECT=$(create_expect_script)
+    
+    # Run the expect script to perform TFTP transfer
+    if /usr/bin/expect "$TEMP_EXPECT" "$TFTP_SERVER" "$INSTALL_KERNEL" "unix.$HOSTID" >> "$LOGFILE" 2>&1; then
+        log_message "kernel relocation completed successfully"
+    else
+        log_message "kernel relocation failed spectacularly (exit code: $?)"
+    fi
+    
+    # Clean up temporary expect script
+    rm -f "$TEMP_EXPECT"
+    
+    # Optional: remove /unix.install after successful backup
+    # rm -f "$INSTALL_KERNEL"
+    ;;
+
+'start')
+    # Do nothing on start
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

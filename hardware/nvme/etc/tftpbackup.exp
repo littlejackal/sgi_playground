@@ -1,0 +1,62 @@
+#!/usr/bin/expect -f
+#
+# Expect script for TFTP transfer of /unix.install
+# Usage: tftpbackup.exp <tftp_server> <local_file> <remote_filename>
+#
+# This script handles the interactive TFTP session to upload a file
+
+if {$argc != 3} {
+    puts "Usage: $argv0 <tftp_server> <local_file> <remote_filename>"
+    exit 1
+}
+
+set tftp_server [lindex $argv 0]
+set local_file [lindex $argv 1]
+set remote_filename [lindex $argv 2]
+set timeout 30
+
+# Start TFTP client
+spawn /usr/bsd/tftp $tftp_server
+
+# Wait for tftp prompt
+expect {
+    "tftp>" {
+        # Set binary mode for kernel transfer
+        send "binary\r"
+        expect "tftp>"
+        
+        # Perform the put operation
+        send "put $local_file $remote_filename\r"
+        
+        expect {
+            "tftp>" {
+                # Success - quit tftp
+                send "quit\r"
+                expect eof
+                puts "TFTP transfer completed successfully"
+                exit 0
+            }
+            timeout {
+                puts "TFTP transfer timed out"
+                send "quit\r"
+                expect eof
+                exit 1
+            }
+            eof {
+                puts "TFTP connection closed unexpectedly"
+                exit 1
+            }
+        }
+    }
+    timeout {
+        puts "Could not connect to TFTP server $tftp_server"
+        exit 1
+    }
+    eof {
+        puts "TFTP client exited unexpectedly"
+        exit 1
+    }
+}
+
+# Should not reach here
+exit 1

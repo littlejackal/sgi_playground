@@ -1,0 +1,108 @@
+/* 
+ * 
+ * Modeline format is as follows: 
+ *  Modeline Description PixelClock H1 H2 H3 H4 V1 V2 V3 V4 low low
+ * 
+ * Sample modeline:
+ *  Modeline "1680x1050_60.00" 147.14 1680 1784 1968 2256 1050 1051 1054 1087 -HSync +Vsync
+ *
+ * Sample extraction:
+ * 
+ * TotalPixelsPerLine = H4 (2256)
+ * HSync = H3 - H2 (184)
+ * HorizontalBackPorch = H4 - H3 (288)
+ * HorizontalFrontPorch = H2 - H1 (104)
+ * ActivePixelsPerLine = H1 (1680)
+ *
+ * TotalLinesPerFrame = V4 (1087)
+ * VSync = V3 - V2 (3)
+ * VerticalBackPorch = V4 - V3 (31)
+ * VerticalFrontPorch = V2 - V1 (1)
+ * ActiveLinesPerFrame = V1 (1050)
+ *
+ * Horizontal Rules:
+ * H1 < H2 < H3 < H4
+ * All of these above numbers can be perfectly divided by 8
+ * 
+ * Vertical Rules:
+ * V1 < V2 < V3 < V4
+ */
+
+ 
+General {
+
+        FieldsPerFrame = 1;     /* Always 1 for non interlaced formats */
+        FramesPerSecond = 60;   /* Extracted from Description */
+        TotalLinesPerFrame = 1087;  /* Is TotalLinesPerFrame from Extraction above */
+        TotalPixelsPerLine = 2256;  /* Is TotalPixelsPerLine from Extraction above */
+
+        ActiveLinesPerFrame = 1050; /* Is ActiveLinesPerFrame from Extraction above */
+        ActivePixelsPerLine = 1680; /* Is ActivePixelsPerLine from Extraction above */
+        
+        FormatName = "1680x1050_60.00"; /* Is from the Description field in the modeline */
+}
+
+Active Line {
+        HorizontalFrontPorch = 104 pixels;  /* Is HorizontalFrontPorch fromm Extraction above */
+        HorizontalSync = 184 pixels;        /* Is HSync from Extraction above */
+        HorizontalBackPorch = 288 pixels;   /* Is HorizontalBackPorch from Extraction above */
+}
+
+Field
+{
+    Vertical Sync =
+    {
+        {
+            Length = 1.0H;
+            Low = 0.0 usec;
+        }
+        repeat 3    /* Is VSync from Extraction above */
+        {
+            Length = 1.0H;
+        }
+    }
+
+    Initial Low;
+    Vertical Back Porch =
+    {
+        {
+            Length = 1.0H;
+            High = HorizontalSync;
+        }
+        repeat 31   /* Is VerticalBackPorch from Extraction above */
+        {
+            Length = 1.0H;
+            Low = 0.0 usec;
+            High = HorizontalSync;
+        }
+    }
+
+    Initial High;
+    Active =
+    {
+        repeat ActiveLinesPerFrame
+        {
+            Length = 1.0H;
+            Low = 0.0 usec;
+            High = HorizontalSync;
+        }
+    }
+
+    Initial High;
+    Vertical Front Porch =
+    {
+        repeat 1    /* Is VerticalFrontPorch from Extraction above */
+        {
+            Length = 1.0H;
+            Low = 0.0 usec;
+            High = HorizontalSync;
+        }
+    }
+}
+
+#if 0
+postprocess
+{
+        dump edge;
+}
+#endif
