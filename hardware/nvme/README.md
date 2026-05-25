@@ -1,5 +1,7 @@
 # Migrating spinning disk to nVME + ZuluScsi
 
+!! This has been neglected for quite some time. I suggest you ignore the autoconfig portion until I have some time to rework it !!
+
 ## Goals
 
 The goal of this exercise is to yeet the noisy spinning rust from your SGI workstation. 
